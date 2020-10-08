@@ -1,0 +1,55 @@
+#!/bin/bash
+
+sudo dnf -y update
+sudo dnf -y install vim wget
+
+# install vscode
+sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
+
+sudo dnf check-update
+sudo dnf install code
+
+
+# install vim and powerline
+#sudo dnf -y install powerline vim-powerline tmux-powerline powerline-fonts
+
+# install nerdfonts and starship command prompt
+sudo dnf -y install git
+git clone --depth=1 https://github.com/ryanoasis/nerd-fonts ~/.nerd-fonts
+cd ~/.nerd-fonts 
+sudo ./install.sh
+
+sudo dnf -y install starship
+
+
+
+# install docker
+# see https://fedoramagazine.org/docker-and-fedora-32/
+sudo grubby --update-kernel=ALL --args="systemd.unified_cgroup_hierarchy=0"
+
+sudo firewall-cmd --permanent --zone=trusted --add-interface=docker0
+sudo firewall-cmd --permanent --zone=FedoraWorkstation --add-masquerade
+
+sudo dnf install moby-engine docker-compose
+
+sudo systemctl enable docker
+
+echo "reboot required for Docker installation!"
+
+sudo groupadd docker
+sudo usermod -aG docker $USER
+
+# install network detection tools
+
+# install zeek suricata wireshark
+sudo dnf config-manager --add-repo https://download.opensuse.org/repositories/security:zeek/Fedora_32/security:zeek.repo
+sudo dnf -y install zeek suricata wireshark-qt tcpdump
+
+sudo usermod -a -G wireshark $USER
+
+# install snort from rpm
+
+sudo dnf -y install https://www.snort.org/downloads/snort/snort-2.9.16.1-1.centos8.x86_64.rpm
+
+
