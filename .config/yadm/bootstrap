@@ -15,10 +15,11 @@ sudo dnf install code
 #sudo dnf -y install powerline vim-powerline tmux-powerline powerline-fonts
 
 # install nerdfonts and starship command prompt
-sudo dnf -y install git
-git clone --depth=1 https://github.com/ryanoasis/nerd-fonts ~/.nerd-fonts
-cd ~/.nerd-fonts 
-sudo ./install.sh
+# nerdfonts is 4+ GB choose wisely...
+#sudo dnf -y install git
+#git clone --depth=1 https://github.com/ryanoasis/nerd-fonts ~/.nerd-fonts
+#cd ~/.nerd-fonts 
+#sudo ./install.sh
 
 sudo dnf -y install starship
 
